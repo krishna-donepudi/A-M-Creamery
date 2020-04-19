@@ -1,0 +1,2 @@
+class PayGradeController < ApplicationController
+end
