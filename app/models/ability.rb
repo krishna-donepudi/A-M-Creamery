@@ -18,33 +18,48 @@ class Ability
       # can index store see thier store
       can :index, Store
       can :show, Store do |s|
-        my_store = employee.current_assignment.store_id
-        my_store == s.id
+        if employee.current_assignment.nil? then false
+        else
+          my_store = employee.current_assignment.store_id
+          my_store == s.id
+        end
       end
 
       # index assignment and see my store assignments
       can :index, Assignment
       can :show, Assignment do |a|
-        my_store = employee.current_assignment.store_id
-        a.store_id == my_store
+        if employee.current_assignment.nil? then false
+        else
+          my_store = employee.current_assignment.store_id
+          a.store_id == my_store
+        end
       end
 
       # they can read their own profile and their store employees
       can :index, Employee
       can :show, Employee do |e|  
-        my_store = employee.current_assignment.store_id
-        my_store == e.current_assignment.store_id unless e.current_assignment.nil?
+        if e.current_assignment.nil? then false
+        else
+          my_store = employee.current_assignment.store_id
+          my_store == e.current_assignment.store_id unless e.current_assignment.nil?
+        end
       end
 
       # they can update their stores employee
       can :edit, Employee do |e|  
-        my_store = employee.current_assignment.store_id
-        my_store == e.current_assignment.store_id
+        if e.current_assignment.nil? then false
+        else
+          my_store = employee.current_assignment.store_id
+          my_store == e.current_assignment.store_id
+        end
       end
 
       can :update, Employee do |e|  
-        my_store = employee.current_assignment.store_id
-        my_store == e.current_assignment.store_id
+        if e.current_assignment.nil? then false
+        else
+          my_store = employee.current_assignment.store_id
+          my_store == e.current_assignment.store_id
+        end
       end
       
 

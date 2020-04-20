@@ -1,7 +1,11 @@
 <div class="card">
   <div class="card-content">
     <h4><%= @employee.proper_name %></h4>
-    <h5><%= @employee.role.capitalize %></h5><br />
+    <h5><%= @employee.role.capitalize %></h5>
+    <h5><%= @employee.username %></h5>
+
+    
+    <br />
 
     <b>Current Assignment:&nbsp;&nbsp;</b><br>
       <% if @employee.current_assignment.nil? %>

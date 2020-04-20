@@ -20,14 +20,18 @@
       <p class="supertiny"></p>
       <br />
     </div>
-    <div class="card-action">
-      <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
-    </div>
+    <% if can? :create, Assignment %>
+      <div class="card-action">
+        <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
+      </div>
+    <% end %>
   </div>
 <% else %>
-  <div class="card grey lighten-3">
-    <div class="card-action">
-      <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
+  <% if can? :create, Assignment %>
+    <div class="card grey lighten-3">
+      <div class="card-action">
+        <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

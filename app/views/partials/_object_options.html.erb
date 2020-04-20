@@ -6,7 +6,7 @@
     <% end %>
     &nbsp;&nbsp;
   
-  <% if controller.respond_to?(:update) %>
+  <% if can?(:edit, object) && controller.respond_to?(:update) %>
     <%= link_to(eval("edit_#{model_name}_path(object)"), class: 'waves-effect waves-light btn') do %>
         &nbsp;<%= "Edit #{opt}" %>
     <% end %>

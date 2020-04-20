@@ -46,15 +46,19 @@
       <p class="supertiny"></p>
       <br />
     </div>
-    <div class="card-action">
-      <%= link_to "New Shift", new_shift_path(assignment_id: @employee.current_assignment.id) unless @employee.current_assignment.nil? %>
-    </div>
+    <% if can? :create, Shift %>
+      <div class="card-action">
+        <%= link_to "New Shift", new_shift_path(assignment_id: @employee.current_assignment.id) unless @employee.current_assignment.nil? %>
+      </div>
+    <% end %>
   </div>
 <% else %>
-  <div class="card grey lighten-3">
-    <div class="card-action">
-      <%= link_to "New Shift", new_shift_path(assignment_id: @employee.current_assignment.id) unless @employee.current_assignment.nil? %>
+  <% if can? :create, Shift %>
+    <div class="card grey lighten-3">
+      <div class="card-action">
+        <%= link_to "New Shift", new_shift_path(assignment_id: @employee.current_assignment.id) unless @employee.current_assignment.nil? %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
