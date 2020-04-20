@@ -2,10 +2,10 @@ class Ability
   include CanCan::Ability
 
   def initialize(employee)
-    # set user to new User if not logged in
+    # set employee to new Employee if not logged in
     employee ||= employee.new # i.e., a guest user
     
-    # set authorizations for different user roles
+    # set authorizations for different employee roles
     if employee.role? :admin
       # they get to do it all
       can :manage, :all
@@ -22,18 +22,18 @@ class Ability
         my_store == s.id
       end
 
-      # index assignment and see my store assignment
+      # index assignment and see my store assignments
       can :index, Assignment
       can :show, Assignment do |a|
         my_store = employee.current_assignment.store_id
         a.store_id == my_store
       end
 
-      # they can read their own profile
+      # they can read their own profile and their store employees
       can :index, Employee
       can :show, Employee do |e|  
         my_store = employee.current_assignment.store_id
-        my_store == e.current_assignment.store_id
+        my_store == e.current_assignment.store_id unless e.current_assignment.nil?
       end
 
       # they can update their stores employee
@@ -65,7 +65,7 @@ class Ability
 
       
     else
-      # guests can only read animals covered (plus home pages)
+      # guests can only read ?
       # can :read, Animal
     end
   end

@@ -1,0 +1,34 @@
+<% if @employees.size == 1 %>
+  <% controller.redirect_to employee_path(@employees.first) %>
+<% end %>
+
+<h5>Search result for term <em>'<%= @query %>'</em> resulted in <%= pluralize(@total_hits, 'hit') %></h5>
+<p class="supertiny">&nbsp;</p>
+
+<% if @employees.size > 1 %>
+  <p><em><strong>employees matching term '<%= @query %>'</strong></em></p>
+  <ul>
+    <table class="striped highlight">
+        <thead>
+          <th>Name</th>
+          <th>Current Assignment</th>
+          <th>Phone</th>
+          <th class="align_center">Options</th>
+        </thead>
+        <% for employee in @employees %>
+          <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+            <td><%= link_to employee.name, employee_path(employee) %></td>
+            <td><%= employee.current_assignment.nil? ? 'n/a' : link_to(employee.current_assignment.store.name, store_path(employee.current_assignment.store))  %></td>
+            <td><%= number_to_phone employee.phone %></td>
+
+          <td class="align_center">
+            <%= link_to edit_employee_path(employee) do %>
+              <i class="material-icons">edit</i>
+            <% end %>
+          </td>
+          </tr>
+        <% end %>
+    </table>
+  </ul>
+  <p class="smtext">&nbsp;</p>
+<% end %>

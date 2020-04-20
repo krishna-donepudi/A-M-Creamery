@@ -10,5 +10,12 @@ class HomeController < ApplicationController
 
   def privacy
   end
+
+  def search
+    redirect_back(fallback_location: home_path) if params[:query].blank?
+    @query = params[:query]
+    @employees = Employee.search(@query)
+    @total_hits = @employees.size
+  end
   
 end

@@ -1,0 +1,60 @@
+<% unless @shifts.nil? or @shifts.empty?%>
+  <div class="card">
+    <div class="card-content">
+
+    <% if @previous_shifts.empty? %>
+      <h5>There are no previous shifts for <%= @employee.proper_name %></h5>
+    <% else %>
+      <h5>Previous Shifts</h5>
+
+      <table class="striped highlight">
+        <thead>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+        </thead>
+        <% @previous_shifts.each do |shift| %>
+          <tr %>
+            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+            <td><%= shift.start_time.strftime("%l:%M %p") %> - <%= shift.end_time.strftime("%l:%M %p") %></td>
+            <td><%= shift.status.capitalize %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <br />
+    <% if @upcoming_shifts.empty? %>
+      <h5>There are no upcoming shifts for <%= @employee.proper_name %></h5>
+    <% else %>
+      <h5>Upcoming Shifts</h5>
+
+      <table class="striped highlight">
+        <thead>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+        </thead>
+        <% @upcoming_shifts.each do |shift| %>
+          <tr %>
+            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+            <td><%= shift.start_time.strftime("%l:%M %p") %> - <%= shift.end_time.strftime("%l:%M %p") %></td>
+            <td><%= shift.status.capitalize %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+      <p class="supertiny"></p>
+      <br />
+    </div>
+    <div class="card-action">
+      <%= link_to "New Shift", new_shift_path(assignment_id: @employee.current_assignment.id) unless @employee.current_assignment.nil? %>
+    </div>
+  </div>
+<% else %>
+  <div class="card grey lighten-3">
+    <div class="card-action">
+      <%= link_to "New Shift", new_shift_path(assignment_id: @employee.current_assignment.id) unless @employee.current_assignment.nil? %>
+    </div>
+  </div>
+<% end %>
+

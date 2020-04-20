@@ -12,6 +12,7 @@ class EmployeesController < ApplicationController
 
   def show
     retrieve_employee_assignments
+    retrieve_employee_shifts
   end
 
   def new
@@ -38,6 +39,14 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def destroy
+    if @employee.destroy
+      redirect_to employees_url, notice: "Successfully removed #{@employee.proper_name} from the AMC system."
+    else
+      flash.now.alert = "Could not delete employee, was made inactive instead."
+      render action: 'show'
+    end
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +62,12 @@ class EmployeesController < ApplicationController
   def retrieve_employee_assignments
     @current_assignment = @employee.current_assignment
     @previous_assignments = @employee.assignments.to_a - [@current_assignment]
+  end
+
+  def retrieve_employee_shifts
+    @shifts = @employee.shifts.all
+    @previous_shifts = @employee.shifts.for_past_days(7)
+    @upcoming_shifts = @employee.shifts.for_next_days(8)
   end
 
 end

@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   get 'employee/edit' => 'employee#edit', :as => :edit_current_employee
   get 'login' => 'sessions#new', :as => :login
   get 'logout' => 'sessions#destroy', :as => :logout
+
+  get 'employees/search', to: 'employees#search', as: :employee_search
 end

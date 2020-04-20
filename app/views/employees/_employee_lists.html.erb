@@ -5,18 +5,21 @@
     <% if employees.empty? %>
       <p>There are no <%= state.downcase %> <%= role.downcase %> at this time.</p>
     <% else %>
-
       <table class="striped highlight">
         <thead>
           <th>Name</th>
-          <th>Current Assignment</th>
+          <% unless state == 'inactive' %>
+            <th>Current Assignment</th>
+          <% end %>
           <th>Phone</th>
           <th class="align_center">Options</th>
         </thead>
         <% for employee in employees %>
           <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
             <td><%= link_to employee.name, employee_path(employee) %></td>
-            <td><%= employee.current_assignment.nil? ? 'n/a' : link_to(employee.current_assignment.store.name, store_path(employee.current_assignment.store))  %></td>
+            <% unless state == 'inactive' %>
+              <td><%= employee.current_assignment.nil? ? 'n/a' : link_to(employee.current_assignment.store.name, store_path(employee.current_assignment.store))  %></td>
+            <% end %>
             <td><%= number_to_phone employee.phone %></td>
 
           <td class="align_center">
