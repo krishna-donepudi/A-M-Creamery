@@ -4,6 +4,12 @@ class StoresController < ApplicationController
   before_action :check_login
   authorize_resource
 
+  def generate_payroll
+    dates = DateRange.new(pay_roll_params[:start_date], pay_roll_params[:start_date])
+    payrollcalc = PayrollCalculator.new(dates)
+    @payroll = payrollcalc.create_payroll_record_for(@employee)
+  end
+
   def index
     # get data on all stores and paginate the output to 10 per page
     @active_stores = Store.active.alphabetical.paginate(page: params[:page]).per_page(10)

@@ -78,6 +78,10 @@ class Ability
         e.id == employee.id
       end
 
+      can :generate_payroll, Employee do |e|
+        e.id == employee.id
+      end
+
       
     else
       # guests can only read ?

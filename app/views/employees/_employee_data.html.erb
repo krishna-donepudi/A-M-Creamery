@@ -16,6 +16,22 @@
 
       <% end %>
 
+    <b>Current Pay Grade:&nbsp;&nbsp;</b><br>
+      <% if @employee.current_assignment.nil? or @employee.current_assignment.pay_grade.nil? %>
+        n/a<br /><br />
+      <% else %>
+        <%= @employee.current_assignment.pay_grade.level %><br /><br />
+
+      <% end %>
+    
+    <b>Current Pay Grade Rate:&nbsp;&nbsp;</b><br>
+      <% if @employee.current_assignment.nil? or @employee.current_assignment.pay_grade.nil? or  @employee.current_assignment.pay_grade.current_pay_grade_rate.nil?%>
+        n/a<br /><br />
+      <% else %>
+        <%= @employee.current_assignment.pay_grade.current_pay_grade_rate.rate %><br /><br />
+
+      <% end %>
+
     <b>Phone:&nbsp;&nbsp;</b><br>
       <%= number_to_phone @employee.phone %><br /><br />
 

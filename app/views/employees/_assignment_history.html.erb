@@ -25,21 +25,19 @@
     <% end %>
 </div>
 <% else %>
-<% if can? :create, Assignment %>
-<div class="card grey lighten-3">
-    <div class="card-action">
-        <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
+  <% if can? :create, Assignment %>
+    <div class="card grey lighten-3">
+        <div class="card-action">
+            <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
+        </div>
     </div>
-</div>
-<% end %>
+  <% end %>
 <% end %>
 
-<%# if false %>
-<%# if @current_user.role?(:employee) %>
-<div class="waves-effect waves-light btn">
-    <%= link_to(generate_payroll_url) do %>
-    <strong>Generate Payroll</strong>
-    <% end %>
-</div>
-<%# end %>
-<%# end %>
+<% if @current_user.role?(:employee) %>
+  <div class="waves-effect waves-light btn">
+      <%= link_to(generate_payroll_url) do %>
+        <strong>Generate Payroll</strong>
+      <% end %>
+  </div>
+<% end %>

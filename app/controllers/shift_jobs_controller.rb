@@ -8,21 +8,19 @@ class ShiftJobsController < ApplicationController
     if @shift_job.save
       redirect_to @shift_job.shift, notice: "Successfully added a #{@shift_job.job.name} job to shift #{@shift_job.shift.id}."
     else
+      @shift = Shift.find(params[:shift_job][:shift_id])
       render action: 'new'
     end
   end
 
   def new
     @shift_job = ShiftJob.new
+    @shift = Shift.find(params[:shift_id])
   end
 
   def destroy
-    if @shift_job.destroy
-      redirect_to @shift_job.shift, notice: "Successfully removed #{@shift_job.job.name} from shift #{@shift_job.shift.id}"
-    else
-      flash.now.alert = "Cannot delete non-pending shifts."
-      render action: 'show'
-    end
+    @shift_job.destroy
+    redirect_to @shift_job.shift, notice: "Successfully removed #{@shift_job.job.name} from shift #{@shift_job.shift.id}"
   end
 
   private

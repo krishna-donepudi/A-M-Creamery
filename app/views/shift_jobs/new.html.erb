@@ -1,3 +1,21 @@
-<%= render partial: 'partials/form_structure', locals: {object: @shift_job, 
-                                                        type_of_form: 'ShiftJob',
-                                                        fields: 'fields'} %>
+<div class="row">
+  <div class="col s8">
+    <h6>New Job for <%=@shift.employee.proper_name%> </h6>
+    <h6>for shift from <%= @shift.start_time.strftime("%l:%M %p") %> - <%= @shift.end_time.strftime("%l:%M %p") %> on <%= @shift.date.strftime("%B %d, %Y") %></h6>
+    <h6>at <%= @shift.store.name %> AMC</h6>
+    <%= simple_form_for(@shift_job) do |f| %>
+      <%= f.error_notification %>
+      <div class="row">
+        <div class="form-inputs">
+          <%= f.input :shift_id, as: :hidden, input_html: { value: @shift.id } %>
+          <%= f.input :job_id, :collection => Job.active.alphabetical.to_a, prompt: "Select Job" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-actions col s8">
+          <%= f.button :submit %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

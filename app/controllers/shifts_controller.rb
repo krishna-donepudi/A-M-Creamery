@@ -23,6 +23,7 @@ class ShiftsController < ApplicationController
 	
 	def new
     @shift = Shift.new
+    @shift.assignment_id = params[:assignment_id] unless params[:assignment_id].nil?
     if current_user.role?(:manager)
       @assignments = current_user.current_assignment.store.assignments.current.chronological
       @assign_names = @assignments.map{|x| [x.employee.name, x.id]}

@@ -18,7 +18,13 @@
       </table>
       <p class="supertiny"></p>
       <br />
-    <%= render :partial => 'partials/add_new_object', locals: {model_name: 'shift_job'} %>
+    <% if can? :new, Shift %>
+        <div class="card grey lighten-3">
+          <div class="card-action">
+            <%= link_to "Add a new job", new_shift_job_path(shift_id: @shift.id) %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 <% else %>
@@ -27,7 +33,13 @@
       <h5>No jobs associated with this shift</h5>
       <p class="supertiny"></p>
       <br />
-      <%= render :partial => 'partials/add_new_object', locals: {model_name: 'shift_job'} %>
+      <% if can? :new, Shift %>
+        <div class="card grey lighten-3">
+          <div class="card-action">
+            <%= link_to "Add a new job", new_shift_job_path(shift_id: @shift.id) %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
