@@ -1,3 +1,3 @@
-<%= f.input :pay_grade_id, collection: PayGrade.alphabetical.active.to_a, include_blank: true %>
+<%= f.input :pay_grade_id, collection: @pay_grades, include_blank: true %>
 <%= f.input :rate, include_blank: true %>
 <%= f.input :start_date, label_html: { class: 'active' } %>

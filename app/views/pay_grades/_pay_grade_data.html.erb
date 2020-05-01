@@ -7,7 +7,7 @@
     <b>Active:&nbsp;&nbsp;</b><br>
       <%= @pay_grade.active? ? "Yes" : "No" %><br /><br />
     <b>Current Rate:&nbsp;&nbsp;</b><br>
-      <%= @pay_grade.pay_grade_rates.current.first.rate %><br /><br />
+      <%= @pay_grade.pay_grade_rates.current.empty? ? "N/A" : @pay_grade.pay_grade_rates.current.first.rate %><br /><br />
       
 
   </div>

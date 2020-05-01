@@ -1,7 +1,13 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: [:show, :edit, :update, :destroy]
+  before_action :set_employee, only: [:show, :edit, :update, :destroy, :generate_payroll]
   before_action :check_login
   authorize_resource
+
+  def generate_payroll
+    dates = DateRange.new(Date.today.to_date, 7.days.ago.to_date)
+    payrollcalc = PayrollCalculator.new(dates)
+    @payroll = payrollcalc.create_payroll_record_for(@employee)
+  end
 
   def index
     # for phase 3 only

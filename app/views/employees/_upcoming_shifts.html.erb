@@ -54,7 +54,7 @@
     <% if @upcoming_shifts.empty? %>
       <h5>There are no upcoming shifts for <%= @employee.proper_name %></h5>
     <% else %>
-      <h5>Upcoming Shifts</h5>
+      <h5>Upcoming and Current Shifts</h5>
 
       <table class="striped highlight">
         <thead>
@@ -83,7 +83,7 @@
     <% end %>
     <br/>
     <% if @previous_shifts.empty? %>
-      <h5>There are no previous shifts for <%= @employee.proper_name %></h5>
+      <h5>There are no past shifts for <%= @employee.proper_name %></h5>
     <% else %>
       <h5>Previous Shifts</h5>
 

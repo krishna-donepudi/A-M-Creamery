@@ -13,13 +13,14 @@ class PayGradeRatesController < ApplicationController
 
 	def new
     @pay_grade_rate = PayGradeRate.new
+    @pay_grades = PayGrade.active.alphabetical.map{|p| [p.level, p.id]}
   end
 
   private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pay_grade_rate_params
-    params.require(:pay_grade_rate).permit(:rate, :start_date, :pay_grade)
+    params.require(:pay_grade_rate).permit(:pay_grade_id, :rate, :start_date, :pay_grade)
   end
 	
   

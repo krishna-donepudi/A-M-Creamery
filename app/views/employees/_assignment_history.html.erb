@@ -34,12 +34,12 @@
 <% end %>
 <% end %>
 
-<% if false %>
-  <% if @current_user.role?(:employee) %>
-  <div class="waves-effect waves-light btn">
-      <%= link_to(generate_payroll) do %>
-      <strong>Generate Payroll %></strong>
-      <% end %>
-  </div>
-  <% end %>
-<% end %>
+<%# if false %>
+<%# if @current_user.role?(:employee) %>
+<div class="waves-effect waves-light btn">
+    <%= link_to(generate_payroll_url) do %>
+    <strong>Generate Payroll</strong>
+    <% end %>
+</div>
+<%# end %>
+<%# end %>

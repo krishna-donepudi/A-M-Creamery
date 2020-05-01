@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   get 'logout' => 'sessions#destroy', :as => :logout
 
   get 'employees/search', to: 'employees#search', as: :employee_search
+  get 'employees/:id/generate_payroll', to: 'employees#generate_payroll', as: :generate_payroll
 end
