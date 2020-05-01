@@ -17,5 +17,12 @@ class PayGrade < ApplicationRecord
 
   # Callbacks
   before_destroy -> { cannot_destroy_object() }
+
+  def current_pay_grade_rate
+    curr_pay_grade_rate = self.pay_grade_rates.current    
+    return nil if curr_pay_grade_rate.empty?
+    curr_pay_grade_rate.first   # return as a single object, not an array
+  end
+  
   
 end

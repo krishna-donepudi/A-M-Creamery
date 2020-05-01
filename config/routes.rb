@@ -13,12 +13,15 @@ Rails.application.routes.draw do
   resources :assignments
   resources :jobs
   resources :shifts
+  resources :shift_jobs
   resources :pay_grades
   resources :pay_grade_rates
   resources :sessions
 
   # Custom routes
   patch 'assignments/:id/terminate', to: 'assignments#terminate', as: :terminate_assignment
+  patch 'shifts/:id/clock_in', to: 'shifts#clock_in', as: :clock_in
+  patch 'shifts/:id/clock_out', to: 'shifts#clock_out', as: :clock_out
 
   # You can have the root of your site routed with 'root'
   root 'home#index'

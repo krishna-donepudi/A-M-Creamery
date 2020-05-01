@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-content">
+    <h4> Active Pay Grades</h4>
+
+    <% if @pay_grades_active.nil? or @pay_grades_active.empty? %>
+      <p>There are no active pay grades at this time.</p>
+    <% else %>
+      <table class="striped highlight">
+        <thead>
+          <th>Level</th>
+          <th>Rate</th>
+          <th class="align_center">Options</th>
+        </thead>
+        <% for pay_grade in @pay_grades_active %>
+          <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+            <td><%= link_to(pay_grade.level, pay_grade_path(pay_grade)) %></td>
+            <td><%= pay_grade.pay_grade_rates.current.first.rate%></td>
+          <% if can? :edit, pay_grade %>
+            <td class="align_center">
+              <%= link_to edit_pay_grade_path(pay_grade) do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+            </td>
+          <% end %>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+      <%= will_paginate @pay_grades_active, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <% end %>
+  </div>
+</div>

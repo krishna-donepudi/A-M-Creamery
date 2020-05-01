@@ -1,0 +1,2 @@
+<%= f.input :shift_id, :collection => Shift.finished.chronological.reverse.map{|x| x.id}.to_a, prompt: "Select Shift" %>
+<%= f.input :job_id, :collection => Job.active.alphabetical.to_a, prompt: "Select Job" %>

@@ -11,12 +11,22 @@
           <th>Employee</th>
           <th>Date</th>
           <th>Starting</th>
+          <% if can? :edit, Shift %>
+            <th class="align_center">Options</th>
+          <% end %>
         </thead>
         <% shifts.each do |shift| %>
           <tr %>
             <td><%= link_to shift.employee.name, employee_path(shift.employee) %></td>
             <td><%= shift.date.strftime("%-m/%-d") %></td>
             <td><%= shift.start_time.strftime("%l:%M %P") %></td>
+            <% if (can? :edit, shift) %>
+              <td class="align_center">
+                <%= link_to edit_shift_path(shift) do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </table>

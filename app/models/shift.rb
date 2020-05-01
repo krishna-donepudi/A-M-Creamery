@@ -29,6 +29,8 @@ class Shift < ApplicationRecord
   scope :by_employee,   -> { joins(:assignment, :employee).order(:last_name, :first_name) }
   # scope not in phase 4 requirements (b/c uses date range object)
   scope :for_dates,     ->(date_range) { where('date BETWEEN ? AND ?', date_range.start_date, date_range.end_date) }
+  scope :for_date,     ->(date) { where('date = ?', date) }
+
 
 
   # Validations

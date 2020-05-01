@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-content">
+    <h4><%= if state == 'past' then state.capitalize else state end %> Shifts</h4>
+
+    <% if shifts.nil? or shifts.empty? %>
+      <p>There are no <%= state.downcase %> shifts at this time.</p>
+    <% else %>
+      <table class="striped highlight">
+        <thead>
+          <th>Name</th>
+          <th>Store</th>
+          <th>Data</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Status</th>
+          <th class="align_center">Options</th>
+        </thead>
+        <% for shift in shifts %>
+          <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+            <td><%= if (can? :show, shift.employee) then link_to(shift.employee.name, employee_path(shift.employee)) else shift.employee.name end %></td>
+            <td><%= if (can? :show, shift.store) then link_to(shift.store.name, store_path(shift.store)) else shift.store.name end%></td>
+            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+            <td><%= shift.start_time.strftime("%l:%M %p") %></td>
+            <td><%= shift.end_time.nil? ? "n/a" : shift.end_time.strftime("%l:%M %p") %></td>
+            <td><%= shift.status.capitalize %></td>
+          <% if can? :edit, shift %>
+            <td class="align_center">
+              <%= link_to edit_shift_path(shift) do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+              <%= link_to shift_path(shift) do %>
+                <i class="material-icons">reorder</i>
+              <% end %>
+            </td>
+          <% end %>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+      <%= will_paginate shifts, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-content">
+    <h4>Shift Number: <%= @shift.id %></h4>
+
+    
+    <br />
+    <b>Shift Employee:&nbsp;&nbsp;</b><br>
+      <%= @shift.employee.name %><br /><br />
+
+    <b>Shift Store:&nbsp;&nbsp;</b><br>
+      <%= @shift.store.name %><br /><br />
+
+    <b>Date:&nbsp;&nbsp;</b><br>
+      <%= @shift.date.strftime("%-m/%-d/%y") %><br /><br />
+
+    <b>Start Time:&nbsp;&nbsp;</b><br>
+      <%= @shift.start_time.strftime("%l:%M %p") %><br /><br />
+
+    <b>End Time:&nbsp;&nbsp;</b><br>
+      <%= @shift.end_time.nil? ? "n/a" : @shift.end_time.strftime("%l:%M %p") %><br /><br />
+
+    <b>Status:&nbsp;&nbsp;</b><br>
+      <%= @shift.status.capitalize %><br /><br />
+
+    <b>Report Status:&nbsp;&nbsp;</b><br>
+      <%= @shift.report_completed? ? "Yes" : "No" %><br /><br />
+
+  </div>
+</div>

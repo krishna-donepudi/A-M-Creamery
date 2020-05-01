@@ -1,28 +1,56 @@
 <% unless @shifts.nil? or @shifts.empty?%>
   <div class="card">
     <div class="card-content">
+      <% if @pending_shifts_today.empty? %>
+        <h5>There are no pending shifts today for <%= @employee.proper_name %></h5>
+      <% else %>
+        <h5>Pending Shifts Today</h5>
 
-    <% if @previous_shifts.empty? %>
-      <h5>There are no previous shifts for <%= @employee.proper_name %></h5>
-    <% else %>
-      <h5>Previous Shifts</h5>
+        <table class="striped highlight">
+          <thead>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th class="align_center">Clock In</th>
+          </thead>
+          <% @pending_shifts_today.each do |shift| %>
+            <tr %>
+              <td><%= shift.start_time.strftime("%l:%M %p") %></td>
+              <td><%= shift.end_time.nil? ? "N/A" : shift.end_time.strftime("%l:%M %p") %></td>
+              <td class="align_center">
+                <%= link_to(clock_in_path(shift), method: :patch) do %>
+                    <i class="material-icons">timer</i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <br/>
+    <% if @started_shifts_today.empty? %>
+        <h5><%= @employee.proper_name %> has not started any shifts today</h5>
+      <% else %>
+        <h5>Shifts Started Today</h5>
 
-      <table class="striped highlight">
-        <thead>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Status</th>
-        </thead>
-        <% @previous_shifts.each do |shift| %>
-          <tr %>
-            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
-            <td><%= shift.start_time.strftime("%l:%M %p") %> - <%= shift.end_time.strftime("%l:%M %p") %></td>
-            <td><%= shift.status.capitalize %></td>
-          </tr>
-        <% end %>
-      </table>
-    <% end %>
-    <br />
+        <table class="striped highlight">
+          <thead>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th class="align_center">Clock Out</th>
+          </thead>
+          <% @started_shifts_today.each do |shift| %>
+            <tr %>
+              <td><%= shift.start_time.strftime("%l:%M %p") %></td>
+              <td><%= shift.end_time.nil? ? "N/A" : shift.end_time.strftime("%l:%M %p") %></td>
+              <td class="align_center">
+                <%= link_to(clock_out_path(shift), method: :patch) do %>
+                    <i class="material-icons">timer_off</i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <br/>
     <% if @upcoming_shifts.empty? %>
       <h5>There are no upcoming shifts for <%= @employee.proper_name %></h5>
     <% else %>
@@ -33,12 +61,63 @@
           <th>Date</th>
           <th>Time</th>
           <th>Status</th>
+          <% if can? :edit, Shift %>
+            <th class="align_center">Options</th>
+          <% end %>
         </thead>
         <% @upcoming_shifts.each do |shift| %>
           <tr %>
             <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
             <td><%= shift.start_time.strftime("%l:%M %p") %> - <%= shift.end_time.strftime("%l:%M %p") %></td>
             <td><%= shift.status.capitalize %></td>
+            <% if (can? :edit, shift) %>
+              <td class="align_center">
+                <%= link_to edit_shift_path(shift) do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <br/>
+    <% if @previous_shifts.empty? %>
+      <h5>There are no previous shifts for <%= @employee.proper_name %></h5>
+    <% else %>
+      <h5>Previous Shifts</h5>
+
+      <table class="striped highlight">
+        <thead>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <% if can? :edit, Shift %>
+            <th class="align_center">Edit</th>
+          <% end %>
+          <% if can? :show, Shift %>
+            <th class="align_center">Details</th>
+          <% end %>
+        </thead>
+        <% @previous_shifts.each do |shift| %>
+          <tr %>
+            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+            <td><%= shift.start_time.strftime("%l:%M %p") %> - <%= shift.end_time.strftime("%l:%M %p") %></td>
+            <td><%= shift.status.capitalize %></td>
+            <% if (can? :edit, shift) %>
+              <td class="align_center">
+                <%= link_to edit_shift_path(shift) do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+              </td>
+            <% end %>
+            <% if (can? :show, shift) %>
+              <td class="align_center">
+                <%= link_to shift_path(shift) do %>
+                  <i class="material-icons">reorder</i>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </table>

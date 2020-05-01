@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-content">
+    <h4><%= state.capitalize %> Jobs at AMC</h4>
+
+    <% if jobs.nil? or jobs.empty? %>
+      <p>There are no <%= state.downcase %> jobs at this time.</p>
+    <% else %>
+      <table class="striped highlight">
+        <thead>
+          <th>Job</th>
+          <th class="align_center">Edit</th>
+        </thead>
+        <% for job in jobs %>
+          <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+            <td><%= link_to job.name, job_path(job) %></td>
+            <td class="align_center">
+              <%= link_to edit_job_path(job) do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+      <%= will_paginate jobs, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <% end %>
+  </div>
+</div>

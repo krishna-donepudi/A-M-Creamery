@@ -16,5 +16,16 @@ class PayGradeRate < ApplicationRecord
 
   # Callbacks
   before_destroy -> { cannot_destroy_object() }
+  before_create :end_previous_pay_grade_rate
+
+  private
+  def end_previous_pay_grade_rate
+    current_pay_grade_rate = PayGrade.find(self.pay_grade_id).current_pay_grade_rate
+    if current_pay_grade_rate.nil?
+      return true 
+    else
+      current_pay_grade_rate.update_attribute(:end_date, self.start_date.to_date)
+    end
+  end
 
 end

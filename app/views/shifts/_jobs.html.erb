@@ -1,0 +1,33 @@
+
+<% unless @shift_jobs.nil? or @shift_jobs.empty?%>
+  <div class="card">
+    <div class="card-content">
+      <h5>Jobs</h5>
+
+      <table class="striped highlight">
+        <% @shift_jobs.each do |shift_job| %>
+          <tr %>
+            <td><%= shift_job.job.name %></td>
+            <% if can? :delete, shift_job %>
+            <%= link_to(shift_job_path(shift_job), method: :delete, data: { confirm: 'Are you sure you wish to delete this job from this shift?' }) do %>
+                <td><i class="material-icons">delete</i></td>
+              <% end %>
+            <% end%>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+    <%= render :partial => 'partials/add_new_object', locals: {model_name: 'shift_job'} %>
+    </div>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-content">
+      <h5>No jobs associated with this shift</h5>
+      <p class="supertiny"></p>
+      <br />
+      <%= render :partial => 'partials/add_new_object', locals: {model_name: 'shift_job'} %>
+    </div>
+  </div>
+<% end %>

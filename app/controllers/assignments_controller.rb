@@ -5,8 +5,16 @@ class AssignmentsController < ApplicationController
 
   def index
     # for phase 3 only
+    if current_user.role?(:admin)
       @current_assignments = Assignment.current.chronological.paginate(page: params[:page]).per_page(10)
       @past_assignments = Assignment.past.chronological.paginate(page: params[:page]).per_page(10)
+    elsif current_user.role?(:manager)
+      @current_assignments = Assignment.current.chronological.for_store(current_user.current_assignment.store).paginate(page: params[:page]).per_page(10)
+      @past_assignments = Assignment.past.chronological.for_store(current_user.current_assignment.store).paginate(page: params[:page]).per_page(10)
+    else
+      @current_assignments = Assignment.current.chronological.for_employee(current_user).paginate(page: params[:page]).per_page(10)
+      @past_assignments = Assignment.past.chronological.for_employee(current_user).paginate(page: params[:page]).per_page(10)
+    end
   end
 
   def new

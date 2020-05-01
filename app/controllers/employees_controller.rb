@@ -5,9 +5,15 @@ class EmployeesController < ApplicationController
 
   def index
     # for phase 3 only
-    @active_managers = Employee.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
-    @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
-    @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+    if current_user.role?(:admin)
+      @active_managers = Employee.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+    elsif current_user.role?(:manager)
+      @active_managers = current_user.current_assignment.store.employees.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      @active_employees = current_user.current_assignment.store.employees.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      @inactive_employees = current_user.current_assignment.store.employees.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+    end
   end
 
   def show
@@ -39,6 +45,7 @@ class EmployeesController < ApplicationController
     end
   end
 
+
   def destroy
     if @employee.destroy
       redirect_to employees_url, notice: "Successfully removed #{@employee.proper_name} from the AMC system."
@@ -68,6 +75,8 @@ class EmployeesController < ApplicationController
     @shifts = @employee.shifts.all
     @previous_shifts = @employee.shifts.for_past_days(7)
     @upcoming_shifts = @employee.shifts.for_next_days(8)
+    @pending_shifts_today = @employee.shifts.pending.for_date(Date.current)
+    @started_shifts_today = @employee.shifts.started.for_date(Date.current)
   end
 
 end

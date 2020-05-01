@@ -2,7 +2,7 @@
   <div class="card-content">
     <h4><%= state.capitalize %> <%= role.capitalize %> at AMC</h4>
 
-    <% if employees.empty? %>
+    <% if employees.nil? or employees.empty? %>
       <p>There are no <%= state.downcase %> <%= role.downcase %> at this time.</p>
     <% else %>
       <table class="striped highlight">

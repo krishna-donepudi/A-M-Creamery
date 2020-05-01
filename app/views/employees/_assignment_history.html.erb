@@ -1,37 +1,45 @@
-
-
 <% unless @previous_assignments.nil? or @previous_assignments.empty?%>
-  <div class="card">
+<div class="card">
     <div class="card-content">
-      <h5>Previous Assignments</h5>
+        <h5>Previous Assignments</h5>
 
-      <table class="striped highlight">
-        <thead>
-          <th>Store</th>
-          <th>Dates</th>
-        </thead>
-        <% @previous_assignments.each do |assignment| %>
-          <tr %>
-            <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
-            <td><%= assignment.start_date.strftime("%-m/%-d/%y") %> - <%= assignment.end_date.strftime("%-m/%-d/%y") %></td>
-          </tr>
-        <% end %>
-      </table>
-      <p class="supertiny"></p>
-      <br />
+        <table class="striped highlight">
+            <thead>
+                <th>Store</th>
+                <th>Dates</th>
+            </thead>
+            <% @previous_assignments.each do |assignment| %>
+            <tr %>
+                <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+                <td><%= assignment.start_date.strftime("%-m/%-d/%y") %> - <%= assignment.end_date.strftime("%-m/%-d/%y") %></td>
+            </tr>
+            <% end %>
+        </table>
+        <p class="supertiny"></p>
+        <br />
     </div>
     <% if can? :create, Assignment %>
-      <div class="card-action">
+    <div class="card-action">
         <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <% if can? :create, Assignment %>
-    <div class="card grey lighten-3">
-      <div class="card-action">
-        <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
-      </div>
     </div>
+    <% end %>
+</div>
+<% else %>
+<% if can? :create, Assignment %>
+<div class="card grey lighten-3">
+    <div class="card-action">
+        <%= link_to "New Assignment", new_assignment_path(employee_id: @employee.id) %>
+    </div>
+</div>
+<% end %>
+<% end %>
+
+<% if false %>
+  <% if @current_user.role?(:employee) %>
+  <div class="waves-effect waves-light btn">
+      <%= link_to(generate_payroll) do %>
+      <strong>Generate Payroll %></strong>
+      <% end %>
+  </div>
   <% end %>
 <% end %>

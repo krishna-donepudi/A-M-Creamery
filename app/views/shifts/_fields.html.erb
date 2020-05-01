@@ -1,0 +1,7 @@
+
+<%= f.input :assignment_id, :collection => @assign_names, prompt: "Select employee" %>
+<%= f.input :date, label_html: { class: 'active' } %>
+<%= f.input :start_time, input_html: { class: 'timepicker' },label_html: { class: 'active' }, default: Time.now %>
+<%= f.input :end_time, input_html: { class: 'timepicker' }, default: Time.now + 3.hours %>
+<%= f.input :notes %>
+<%= f.input :status, collection: Shift::STATUS_LIST, label_html: { class: 'active' } %>
