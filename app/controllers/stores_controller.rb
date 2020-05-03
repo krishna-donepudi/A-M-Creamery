@@ -1,13 +1,18 @@
 class StoresController < ApplicationController
 
-  before_action :set_store, only: [:show, :edit, :update, :destroy]
+  before_action :set_store, only: [:show, :edit, :update, :destroy, :store_payroll]
   before_action :check_login
   authorize_resource
 
-  def generate_payroll
-    dates = DateRange.new(pay_roll_params[:start_date], pay_roll_params[:start_date])
-    payrollcalc = PayrollCalculator.new(dates)
-    @payroll = payrollcalc.create_payroll_record_for(@employee)
+  def store_payroll
+    sd = params[:start_date].nil? ? 2.weeks.ago.to_date : params[:start_date].to_date
+    ed = params[:end_date].nil? ? Date.today.to_date : params[:end_date].to_date
+    date_range = DateRange.new(sd, ed)
+    calc = PayrollCalculator.new(date_range)
+    @payroll = calc.create_payrolls_for(@store).sort_by{|p| p.employee.proper_name}
+    @total_hours = @payroll.map{|p| p.hours}.reduce(:+)
+    @total_pay = @payroll.map{|p| p.pay_earned}.reduce(:+)
+
   end
 
   def index

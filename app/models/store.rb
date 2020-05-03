@@ -3,7 +3,8 @@ class Store < ApplicationRecord
   include AppHelpers::Deletions
   include AppHelpers::Activeable::InstanceMethods
   extend AppHelpers::Activeable::ClassMethods
-
+  
+  
   # Relationships
   has_many :assignments
   has_many :employees, through: :assignments

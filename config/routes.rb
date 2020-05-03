@@ -32,4 +32,8 @@ Rails.application.routes.draw do
 
   get 'employees/search', to: 'employees#search', as: :employee_search
   get 'employees/:id/generate_payroll', to: 'employees#generate_payroll', as: :generate_payroll
+
+  get 'stores/:id/payroll' => 'stores#store_payroll'
+  post 'stores/:id/payroll' => 'stores#store_payroll', :as => :store_payroll
+
 end

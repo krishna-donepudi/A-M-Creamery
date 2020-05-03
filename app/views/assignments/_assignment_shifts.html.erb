@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-content">
+      <% if @shifts.empty? %>
+        <h5>There are no shifts for this assignment</h5>
+      <% else %>
+        <h5>Shifts</h5>
+
+        <table class="striped highlight">
+          <thead>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Date</th>
+            <th>Duration</th>
+          </thead>
+          <% @shifts.each do |shift| %>
+            <tr %>
+              <td><%= shift.start_time.strftime("%l:%M %p") %></td>
+              <td><%= shift.end_time.nil? ? "N/A" : shift.end_time.strftime("%l:%M %p") %></td>
+              <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+              <td><%= shift.duration %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+        <p class="supertiny"></p>
+      <br />
+      <%= will_paginate @shifts, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    </div>
+</div>

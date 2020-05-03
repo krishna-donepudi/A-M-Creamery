@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-content">
+    <h4>Assignment <%= @assignment.id %> </h4>
+    <h5>for <%= @assignment.employee.proper_name %> </h5>
+
+    <br/>
+    <b>Store&nbsp;&nbsp;</b>
+      <%= @assignment.store.name %>
+    <br><br/>
+
+    <b>Pay Grade&nbsp;&nbsp;</b>
+      <%= @assignment.pay_grade.level %>
+    <br><br/>
+
+    <b>Pay Grade Rate&nbsp;&nbsp;</b>
+      <%= @assignment.pay_grade.current_pay_grade_rate.rate %>
+    <br><br/>
+
+
+    <b>Start Date&nbsp;&nbsp;</b>
+      <%= @assignment.start_date.strftime("%-m/%-d/%y") %>
+    <br><br/>
+
+    <b>End Date&nbsp;&nbsp;</b>
+      <%= @assignment.end_date.nil? ? "N/A" : @assignment.end_date.strftime("%-m/%-d/%y") %>
+    <br><br/>
+
+  </div>
+</div>

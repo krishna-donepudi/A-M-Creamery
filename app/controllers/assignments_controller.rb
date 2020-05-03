@@ -17,6 +17,10 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def show
+    retrieve_assignment_shifts
+  end
+
   def new
     @assignment = Assignment.new
     @assignment.employee_id = params[:employee_id] unless params[:employee_id].nil?
@@ -61,7 +65,11 @@ class AssignmentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def assignment_params
-    params.require(:assignment).permit(:store_id, :employee_id, :start_date)
+    params.require(:assignment).permit(:store_id, :pay_grade_id, :employee_id, :start_date)
+  end
+
+  def retrieve_assignment_shifts
+    @shifts = @assignment.shifts.chronological.paginate(page: params[:page]).per_page(10)
   end
 
 end

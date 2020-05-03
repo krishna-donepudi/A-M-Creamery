@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col s8">
+        <div class="card">
+            <div class="card-content">
+                <% unless @payroll.empty? %>
+                    <h5>Payroll Summary </h5>
+                    <table class="striped highlight">
+                        <thead>
+                            <th>Total Hours</th>
+                            <th>Total Pay</th>
+                        </thead>
+                            <tr %>
+                                <td><%= @total_hours %></td>
+                                <td><%= @total_pay %></td>
+                            </tr>
+                    </table>
+                        <p class="supertiny"></p>
+                        <br />
+                <% end %>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <% if @payroll.empty? %>
+                    <p>Payroll report unavailiable</p>
+                <% else %>
+                    <h5>Payroll Report </h5>
+                    <table class="striped highlight">
+                        <thead>
+                            <th>Employee</th>
+                            <th>Pay Grade</th>
+                            <th>Pay Rate</th>
+                            <th>Hours</th>
+                            <th>Total Pay</th>
+                        </thead>
+                        <% @payroll.each do |payroll| %>
+                            <tr %>
+                                <td><%= payroll.employee.proper_name %></td>
+                                <td><%= payroll.pay_grade %></td>
+                                <td><%= payroll.pay_rate %></td>
+                                <td><%= payroll.hours %></td>
+                                <td><%= payroll.pay_earned %></td>
+                            </tr>
+                        <% end %>
+                    </table>
+                        <p class="supertiny"></p>
+                        <br />
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s4">
+        <div class="card">
+            <div class="card-content">
+                <%= form_tag(store_payroll_path) do %>
+                    <%= label_tag(:start_date, "Start Date") %>
+                    <%= date_field_tag(:start_date) %>
+                    <%= label_tag(:end_date, "End Date") %>
+                    <%= date_field_tag(:end_date) %>
+                    <%= submit_tag("Generate", class: "btn") %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
