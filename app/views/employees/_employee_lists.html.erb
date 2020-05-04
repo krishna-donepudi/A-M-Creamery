@@ -33,7 +33,7 @@
       </table>
       <p class="supertiny"></p>
       <br />
-      <%= will_paginate employees, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+      <%= if current_user.role?(:admin) then will_paginate employees, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" end %>
     <% end %>
   </div>
 </div>

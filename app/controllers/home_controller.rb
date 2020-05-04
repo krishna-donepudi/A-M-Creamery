@@ -3,9 +3,7 @@ class HomeController < ApplicationController
     unless current_user.nil?
       if current_user.role?(:employee)
         redirect_to employee_path(current_user)
-      elsif current_user.role?(:manager)
-        redirect_to store_path(current_user.current_assignment.store)
-      elsif current_user.role?(:admin)
+      else
         redirect_to dashboard_path
       end
     end
@@ -23,7 +21,10 @@ class HomeController < ApplicationController
 
   def dashboard
     @stores = Store.active.alphabetical
-    @shifts = current_user.store.shifts.pending unless current_user.store.nil?
+    unless current_user.role?(:admin)
+      @employees = Employee.active.regulars.alphabetical.select{|e| e.current_assignment.nil? ? false : e.current_assignment.store == current_user.current_assignment.store}
+      @shifts = Shift.for_store(current_user.current_assignment.store).finished.select{ |s| !s.report_completed? }
+    end
   end
 
   def search

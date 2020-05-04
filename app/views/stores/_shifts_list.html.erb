@@ -22,8 +22,12 @@
             <td><%= shift.start_time.strftime("%l:%M %P") %></td>
             <% if (can? :edit, shift) %>
               <td class="align_center">
+                
                 <%= link_to edit_shift_path(shift) do %>
                   <i class="material-icons">edit</i>
+                <% end %>
+                <%= link_to(shift) do %>
+                    <i class="material-icons">details</i>
                 <% end %>
               </td>
             <% end %>

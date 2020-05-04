@@ -63,13 +63,13 @@ class ShiftsController < ApplicationController
   def clock_in
     @new_time = TimeClock.new(@shift)
     @new_time.start_shift_at(Time.now)
-    redirect_to @shift
+    redirect_to @shift.employee
   end
 
   def clock_out
     @new_time = TimeClock.new(@shift)
     @new_time.end_shift_at(Time.now)
-    redirect_to @shift
+    redirect_to @shift.employee
   end
   
   def destroy

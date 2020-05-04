@@ -82,6 +82,14 @@ class Ability
         e.id == employee.id
       end
 
+      can :clock_in, Shift do |s|
+        s.assignment.employee.id == employee.id
+      end
+
+      can :clock_out, Shift do |s|
+        s.assignment.employee.id == employee.id
+      end
+
       
     else
       # guests can only read ?

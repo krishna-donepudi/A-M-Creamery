@@ -16,9 +16,9 @@ class EmployeesController < ApplicationController
       @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
       @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
     elsif current_user.role?(:manager)
-      @active_managers = current_user.current_assignment.store.employees.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
-      @active_employees = current_user.current_assignment.store.employees.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
-      @inactive_employees = current_user.current_assignment.store.employees.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+      @active_managers = Employee.managers.active.alphabetical.select{|e| e.current_assignment.nil? ? false : e.current_assignment.store == current_user.current_assignment.store}
+      @active_employees = Employee.regulars.active.alphabetical.select{|e| e.current_assignment.nil? ? false : e.current_assignment.store == current_user.current_assignment.store}
+      @inactive_employees = Employee.regulars.inactive.alphabetical.select{|e| e.current_assignment.nil? ? false : e.current_assignment.store == current_user.current_assignment.store}
     end
   end
 

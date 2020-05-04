@@ -11,6 +11,7 @@
             <th>End Time</th>
             <th>Date</th>
             <th>Duration</th>
+            <th class = "align_center">Details</th>
           </thead>
           <% @shifts.each do |shift| %>
             <tr %>
@@ -18,6 +19,11 @@
               <td><%= shift.end_time.nil? ? "N/A" : shift.end_time.strftime("%l:%M %p") %></td>
               <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
               <td><%= shift.duration %></td>
+              <td class = "align_center">
+                <%= link_to(shift) do %>
+                  <i class="material-icons">details</i>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </table>

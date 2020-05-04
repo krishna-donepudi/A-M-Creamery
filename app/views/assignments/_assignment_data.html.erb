@@ -1,15 +1,15 @@
 <div class="card">
   <div class="card-content">
     <h4>Assignment <%= @assignment.id %> </h4>
-    <h5>for <%= @assignment.employee.proper_name %> </h5>
+    <h5>for <%= link_to @assignment.employee.proper_name, @assignment.employee %> </h5>
 
     <br/>
     <b>Store&nbsp;&nbsp;</b>
-      <%= @assignment.store.name %>
+      <%= link_to @assignment.store.name, @assignment.store %>
     <br><br/>
 
     <b>Pay Grade&nbsp;&nbsp;</b>
-      <%= @assignment.pay_grade.level %>
+      <%= link_to @assignment.pay_grade.level, @assignment.pay_grade %>
     <br><br/>
 
     <b>Pay Grade Rate&nbsp;&nbsp;</b>
