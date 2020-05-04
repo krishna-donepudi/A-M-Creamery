@@ -23,6 +23,9 @@ class EmployeesController < ApplicationController
   end
 
   def show
+    dates = DateRange.new(Date.today.to_date, 7.days.ago.to_date)
+    payrollcalc = PayrollCalculator.new(dates)
+    @payroll = payrollcalc.create_payroll_record_for(@employee)
     retrieve_employee_assignments
     retrieve_employee_shifts
   end

@@ -1,10 +1,12 @@
 <% opt = "#{object.respond_to?(:name) ? object.name : model_name.capitalize }" %>
 
 <div class="form-actions">
-    <%= link_to(eval("#{model_name.pluralize}_path"), class: 'waves-effect waves-light btn') do %>
-      &nbsp;Display All <% model_name.pluralize.capitalize %>
-    <% end %>
-    &nbsp;&nbsp;
+    <% if can?(:index, object) && controller.respond_to?(:index) %>
+      <%= link_to(eval("#{model_name.pluralize}_path"), class: 'waves-effect waves-light btn') do %>
+        &nbsp;Display All <% model_name.pluralize.capitalize %>
+      <% end %>
+      &nbsp;&nbsp;
+    <%end%>
   
   <% if can?(:edit, object) && controller.respond_to?(:update) %>
     <%= link_to(eval("edit_#{model_name}_path(object)"), class: 'waves-effect waves-light btn') do %>
