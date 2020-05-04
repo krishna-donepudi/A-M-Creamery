@@ -5,14 +5,13 @@ class StoresController < ApplicationController
   authorize_resource
 
   def store_payroll
-    sd = params[:start_date].nil? ? 2.weeks.ago.to_date : params[:start_date].to_date
-    ed = params[:end_date].nil? ? Date.today.to_date : params[:end_date].to_date
-    date_range = DateRange.new(sd, ed)
+    @sd = params[:start_date].nil? ? 2.weeks.ago.to_date : params[:start_date].to_date
+    @ed = params[:end_date].nil? ? Date.today.to_date : params[:end_date].to_date
+    date_range = DateRange.new(@sd, @ed)
     calc = PayrollCalculator.new(date_range)
     @payroll = calc.create_payrolls_for(@store).sort_by{|p| p.employee.proper_name}
     @total_hours = @payroll.map{|p| p.hours}.reduce(:+)
     @total_pay = @payroll.map{|p| p.pay_earned}.reduce(:+)
-
   end
 
   def index

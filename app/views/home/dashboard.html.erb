@@ -1,0 +1,64 @@
+<div class = "row">
+    <div class = "col s8">
+        <% for store in @stores %>
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><%= store.name %></span>
+                    <b>Manager(s):&nbsp;&nbsp;</b><br>
+                        <% for manager in store.assignments.current.select {|a| a.employee.role == "manager"} %>
+                            <%= manager.employee.name %><br />
+                        <% end %>
+                    <b>Phone:&nbsp;&nbsp;</b><br>
+                        <%= number_to_phone store.phone %>
+                </div>
+                <div class="card-action">
+                <a><%=link_to "Payroll Report (2 Weeks)", store_payroll_path(store)%></a>
+                <a><%=link_to "Payroll Report (1 Month)", store_payroll_path(store, start_date: 1.month.ago)%></a>
+                </div>
+            </div>
+        <% end %>
+    </div>
+    <div class = "col s4">
+        <div class = "right-align">
+            <br>
+            <div class="waves-effect waves-light btn">
+                <i class="material-icons left">add</i>
+                <%= link_to(new_assignment_path) do %>
+                    <strong>New Assignment</strong>
+                <% end %>
+            </div>
+            <br/>
+            <br/>
+            <div class="waves-effect waves-light btn">
+                <i class="material-icons left">add</i>
+                <%= link_to(new_store_path) do %>
+                    <strong>New Store</strong>
+                <% end %>
+            </div>
+            <br/>
+            <br/>
+            <div class="waves-effect waves-light btn">
+                <i class="material-icons left">add</i>
+                <%= link_to(new_employee_path) do %>
+                    <strong>New Employee</strong>
+                <% end %>
+            </div>
+            <br/>
+            <br/>
+            <div class="waves-effect waves-light btn">
+                <i class="material-icons left">add</i>
+                <%= link_to(new_pay_grade_path) do %>
+                    <strong>New Pay Grade</strong>
+                <% end %>
+            </div>
+            <br/>
+            <br/>
+            <div class="waves-effect waves-light btn">
+                <i class="material-icons left">add</i>
+                <%= link_to(new_job_path) do %>
+                    <strong>New Job</strong>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,2 +1,2 @@
-<h3>Payroll for <%= @store.name %></h3>
+<h3>Payroll for <%= @store.name %> (<%=@sd.strftime("%-m/%-d/%y")%> - <%=@ed.strftime("%-m/%-d/%y")%>)</h3>
 <%= render partial: 'payroll_reports' %>
