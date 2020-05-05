@@ -30,7 +30,11 @@ class HomeController < ApplicationController
   def search
     redirect_back(fallback_location: home_path) if params[:query].blank?
     @query = params[:query]
-    @employees = Employee.search(@query)
+    if current_user.role?(:admin)
+      @employees = Employee.search(@query)
+    elsif current_user.role?(:manager)
+      @employees = current_user.current_assignment.store.employees.search(@query)
+    end
     @total_hits = @employees.size
   end
   

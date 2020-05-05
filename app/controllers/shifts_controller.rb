@@ -76,7 +76,7 @@ class ShiftsController < ApplicationController
     if @shift.destroy
       redirect_to shifts_url, notice: "Successfully removed #{@shift.id} from the AMC system."
     else
-      flash.now.alert = "Unknown error"
+      flash.now.alert = "Shift cannot be deleted if it is finished"
       redirect_to shifts_url
     end
   end

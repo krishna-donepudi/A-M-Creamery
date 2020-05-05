@@ -1,0 +1,50 @@
+<h4>Performace of <%= @store.name %> Employees</h4>
+<div class = "row">
+    <div class = "col s12">
+        <div class = "card">
+            <div class = "card-content">
+                Total Hours Worked in the Past Month: <%= @hours_worked%>
+            </div>
+        </div>
+    </div>
+</div>
+<div class = "row">
+    <div class = "col s6">
+        <div class = "card">
+            <div class = "card-content">
+                <span class="card-title">Employees that Worked the Least Hours in the Past Month</span>
+                <table>
+                    <thead>
+                        <th>Employee</th>
+                        <th>Hours Worked</th>
+                    </thead>
+                    <% for employee in @employee_hours.slice(0, 5) %>
+                        <tr>
+                            <td><%= link_to employee[0].name, employee[0] %></td>
+                            <td><%= employee[1] %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class = "col s6">
+        <div class = "card">
+            <div class = "card-content">
+                <span class="card-title">Employees That Missed Most Shifts in the Past Month</span>
+                <table>
+                    <thead>
+                        <th>Employee</th>
+                        <th>Missed Shifts</th>
+                    </thead>
+                    <% for employee in @employee_shift_missed.slice(0, 5) %>
+                        <tr>
+                            <td><%= link_to employee[0].name, employee[0] %></td>
+                            <td><%= employee[1] %></td>
+                        </tr>
+                    <% end %>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

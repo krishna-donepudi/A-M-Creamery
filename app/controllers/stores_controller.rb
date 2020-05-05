@@ -1,8 +1,15 @@
 class StoresController < ApplicationController
 
-  before_action :set_store, only: [:show, :edit, :update, :destroy, :store_payroll]
+  before_action :set_store, only: [:show, :edit, :update, :destroy, :store_payroll, :performance]
   before_action :check_login
   authorize_resource
+
+  def performance
+    @assignments = @store.employees.regulars.active.map{|e| e.current_assignment }
+    @employee_hours = @assignments.map{|a| [a.employee, a.shifts.finished.for_past_days(30).map{|s| s.duration}.reduce(:+)] }.sort_by{|a| a[1]}
+    @employee_shift_missed = @assignments.map{|a| [a.employee, a.shifts.pending.for_past_days(30).size] }.sort_by{|a| a[1]}
+    @hours_worked = @employee_hours.inject(0) {|sum, a| a[1].nil? ? sum : sum + a[1] }
+  end
 
   def store_payroll
     @sd = params[:start_date].nil? ? 2.weeks.ago.to_date : params[:start_date].to_date

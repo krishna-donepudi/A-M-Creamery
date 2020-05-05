@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   get 'stores/:id/payroll' => 'stores#store_payroll'
   post 'stores/:id/payroll' => 'stores#store_payroll', :as => :store_payroll
 
+  get 'stores/:id/performance' => 'stores#performance', :as => :store_performance
+
 end

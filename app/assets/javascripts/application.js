@@ -49,3 +49,6 @@ $(document).ready(function () {
   $('.timepicker').timepicker();
 });
 
+$(document).ready(function () {
+  $('.carousel').carousel();
+});
