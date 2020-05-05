@@ -1,0 +1,108 @@
+<div class = "row">
+    <div class = "col s8">
+        <div class="card">
+            <div class="card-content">
+            <% if @upcoming_shifts.nil? or @upcoming_shifts.empty? %>
+                <h5>There are no upcoming shifts for <%= current_user.proper_name %></h5>
+            <% else %>
+                <h5>Upcoming Shifts</h5>
+                <table class="striped highlight">
+                <thead>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </thead>
+                <% @upcoming_shifts.each do |shift| %>
+                    <tr %>
+                    <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+                    <td><%= shift.start_time.strftime("%l:%M %p") %> - <%= shift.end_time.strftime("%l:%M %p") %></td>
+                    <td><%= shift.status.capitalize %></td>
+                    </tr>
+                <% end %>
+                </table>
+            <% end %>
+                <p class="supertiny"></p>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class = "col s4">
+        <% if @current_user.role?(:employee) %>
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">Payroll for Past Week</span>
+        <table>
+            <thead>
+                <th>Hours Worked</th>
+                <th>Pay Earned</th>
+            </thead>
+            <tr>
+                <td><%=@payroll.hours unless @payroll.nil?%></td>
+                <td><%=@payroll.pay_earned unless @payroll.nil?%></td>
+            </tr>
+        </table>
+    </div>
+    <div class="card-action">
+        <a>><%= link_to "More Details", generate_payroll_url(id: current_user.id) %></a>
+    </div>
+</div>
+<br />
+<% end %>
+<% if current_user.role?(:employee)%>
+<div class="card">
+    <div class="card-content">
+        <% if @pending_shifts_today.nil? or @pending_shifts_today.empty? %>
+        <h5>No Shifts to Clock In</h5>
+        <% else %>
+        <h5>Shifts To Clock In</h5>
+
+        <table class="striped highlight">
+            <thead>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th class="align_center">Clock In</th>
+            </thead>
+            <% @pending_shifts_today.each do |shift| %>
+            <tr %>
+                <td><%= shift.start_time.strftime("%l:%M %p") %></td>
+                <td><%= shift.end_time.nil? ? "N/A" : shift.end_time.strftime("%l:%M %p") %></td>
+                <td class="align_center">
+                    <%= link_to(clock_in_path(shift), method: :patch) do %>
+                    <i class="material-icons">timer</i>
+                    <% end %>
+                </td>
+            </tr>
+            <% end %>
+        </table>
+        <% end %>
+    </div>
+</div>
+<div class="card">
+    <div class="card-content">
+        <% if @started_shifts_today.nil? or @started_shifts_today.empty? %>
+            <h5>No Shifts to Clock Out</h5>
+        <% else %>
+            <h5>Shifts To Clock Out</h5>
+        <table class="striped highlight">
+            <thead>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th class="align_center">Clock Out</th>
+            </thead>
+            <% @started_shifts_today.each do |shift| %>
+            <tr %>
+                <td><%= shift.start_time.strftime("%l:%M %p") %></td>
+                <td><%= shift.end_time.nil? ? "N/A" : shift.end_time.strftime("%l:%M %p") %></td>
+                <td class="align_center">
+                    <%= link_to(clock_out_path(shift), method: :patch) do %>
+                    <i class="material-icons">timer_off</i>
+                    <% end %>
+                </td>
+            </tr>
+            <% end %>
+        </table>
+        <% end %>
+        <br />
+    </div>
+</div>
+<%end%>

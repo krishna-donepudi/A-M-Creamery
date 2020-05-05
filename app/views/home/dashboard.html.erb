@@ -1,6 +1,9 @@
-<%= render :partial => "partials/title_with_search", locals: { title: "#{current_user.first_name}'s Dashboard "} %>
 <% if current_user.role?(:admin) %>
+    <%= render :partial => "partials/title_with_search", locals: { title: "#{current_user.first_name}'s Dashboard "} %>
     <%= render partial: 'admin_dashboard' %>
+<% elsif current_user.role?(:manager) %>
+    <%= render :partial => "partials/title_with_search", locals: { title: "#{current_user.first_name}'s Dashboard "} %>
+    <%= render partial: 'manager_dashboard' %>
 <% else %>
-     <%= render partial: 'manager_dashboard' %>
+    <%= render partial: 'employee_dashboard' %>
 <% end %>
