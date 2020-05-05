@@ -6,6 +6,8 @@
     <h2><%= link_to 'A&M Creamery', home_path %></h2>
   </div>
   <div class="col s1">
-    &nbsp;
+    <% unless current_user.nil? %>
+      <li><%= link_to 'Logout', logout_path %></li>
+    <% end %>
   </div>
 </div>
