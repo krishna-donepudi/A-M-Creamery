@@ -187,7 +187,7 @@ GEM
     populator (1.0.0)
     public_suffix (4.0.6)
     puma (3.11.0)
-    rack (2.0.7)
+    rack (2.2.3)
     rack-contrib (2.1.0)
       rack (~> 2.0)
     rack-test (1.1.0)
